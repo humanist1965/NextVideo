@@ -22,6 +22,16 @@
   (reset! DEBUG-BUFFER (conj @DEBUG-BUFFER msg)))
 
 
+(defonce RESOURCE_ROOT (atom "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
+
+;;
+;; This is a local version of resp/resource-response
+;; resp/resource-response is not always working for me because of classpath issues (when I share a REPL across projects)
+;; So this version just slurps response in from a specific filepath
+(defn resource-response [relpath]
+  (slurp (str @RESOURCE_ROOT relpath))
+  )
+
 (show-debug)
 (clear-debug)
 ;; *********************************
@@ -29,7 +39,7 @@
 ;; 
 ;;
 (defroutes app
-  (GET "/" [] (resp/resource-response "public/main.html")) 
+  (GET "/" [] (resource-response "public/nxtui/main.html")) 
   (GET "/about" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" request))
   (GET "/withdraw" request {:status  200
                             :headers {"Content-Type" "application/html"}
@@ -57,12 +67,10 @@
   (start-bookmark-server) ;; http://localhost:3002
   (stop-bookmarkserver)
 
-(resp/resource-response "public/nxtui/main.html")
-  
-  (io/resource "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/public/main.html")
-    (slurp "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/public/main.html")
+;; Not picking up main.js
 
-  
+https://stackoverflow.com/questions/12336643/how-to-serve-video-files-to-the-ipad-using-jetty-ring
+  https://ring-clojure.github.io/ring/ring.middleware.file.html
   
 ;;
   )
