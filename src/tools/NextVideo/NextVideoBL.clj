@@ -1,7 +1,9 @@
 (ns tools.NextVideo.NextVideoBL
   (:require [clojure.string :as str]
             [clojure.data.json :as json]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [tools.NextVideo.NV_datastore :as db]
+            ))
 
 
 (defn now-datetime []
@@ -9,7 +11,40 @@
 
 
 (defn load-user-data [userID]
-  )
+  (let [all-list (db/getYAML "AllSeriesList")
+        all-dict (reduce (fn [res it]
+                           (assoc res (get it "seriesID") it)) {} all-list)
+        watchListKeys (db/getSubKeys userID)
+        watchList (reduce (fn [res it]
+                            (let [user-obj (db/get-obj it)]
+                              (conj res user-obj)))
+                          [] watchListKeys)
+        watchList (sort watchList)
+        consideredList (reduce (fn [res it]
+                                 (let [seriesID (get it "seriesID")]
+                                   (assoc res seriesID true))) {} watchList)
+        watchListExt (mapv (fn [obj]
+                             (let [seriesID (get obj "seriesID")
+                                   glob-obj (get all-dict seriesID)
+                                   name (get glob-obj "name")
+                                   image (get glob-obj "image")]
+                               (merge obj {"name" name "image" image})))
+                           watchList)
+
+        ;; At the moment as part of MVP include any missing global items onto the user watchList
+        ;; May change this in future to require users to add Series they want to watch
+        ;;
+        watchListExt (reduce (fn [res it]
+                               (let [seriesID (get it "seriesID")
+                                     alreadyIn? (get consideredList seriesID)]
+                                 (if alreadyIn? res
+                                     (conj res (merge it {"currentSeasonNumber" 1 "nextEpisodeNumber" 1 "lastWatchedDate" "1900-01-01"})))))
+                             watchListExt all-list)
+
+        watchListDict (reduce (fn [res it]
+                                (let [seriesID (get it "seriesID")]
+                                  (assoc res seriesID it))) {} watchListExt)]
+    {:all-list all-list :watchList watchListExt :watchListDict watchListDict}))
 
 (defn get-watch-list-dict [userID seriesID]
   (get-in (load-user-data userID) [:watchListDict seriesID]) 
@@ -17,9 +52,7 @@
 
 (defn save-user-data [])
 
-(defn update-user-data [userID seriesID attr val]
-  
- 
+(defn update-user-data [userID seriesID attr val] 
   )
 
 
