@@ -8,7 +8,9 @@
           [ring.util.response :as resp]
           [clojure.java.shell :as sh]
           [clojure.string :as str]
-          [clojure.data.json :as json])   
+          [clojure.data.json :as json]
+          [clojure.java.io :as io]
+          )   
 
 )
 
@@ -27,8 +29,8 @@
 ;; 
 ;;
 (defroutes app
-  (GET "/" [] (resp/resource-response "public/fees-poc.html")) ; #search= dfbab3ef-0544-4037-bc6b-ebafe0186efc 
-  (GET "/about" request (str "<h1>Hello World!!!</h1>" request))
+  (GET "/" [] (resp/resource-response "public/main.html")) 
+  (GET "/about" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" request))
   (GET "/withdraw" request {:status  200
                             :headers {"Content-Type" "application/html"}
                             :body  "<h1>Withdraw</h1>"})
@@ -47,6 +49,7 @@
 (defn start-bookmark-server [] (.start server))
 (defn stop-bookmarkserver [] (.stop server))
 
+
 (comment
   ;; *********************************************
   ;; [1] Start/Stop the webserver
@@ -54,7 +57,13 @@
   (start-bookmark-server) ;; http://localhost:3002
   (stop-bookmarkserver)
 
+(resp/resource-response "public/nxtui/main.html")
+  
+  (io/resource "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/public/main.html")
+    (slurp "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/public/main.html")
 
+  
+  
 ;;
   )
 

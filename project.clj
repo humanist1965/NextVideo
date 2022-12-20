@@ -1,5 +1,5 @@
 (defproject clojure-notebook "0.0.1"
-  :description "My clozure tests"
+  :description "Next Video"
   :url "https://github.com/MkershMambu"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -11,6 +11,9 @@
                  [org.clojure/tools.cli "0.2.2"]
                  [org.clojure/math.combinatorics "0.1.6"]
                  [org.clojure/data.json "1.0.0"]
+                 [ring-server "0.2.8"]
+                 [compojure "1.6.2"]
+                 [ring/ring-defaults "0.3.2"]
                  [http-kit "2.4.0"]
                  [clj-wamp "1.0.0-rc1"]
                  [clj-http "3.10.1"]
