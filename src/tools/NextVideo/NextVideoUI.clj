@@ -1,4 +1,5 @@
-(ns tools.NextVideo.NextVideoUI
+(ns tools.NextVideo.NextVideoUI 
+(:use [ring.middleware.file :only [wrap-file]])  
 (:require [compojure.core :refer :all]
           [compojure.route :as route]
           [ring.adapter.jetty :as jet]
@@ -39,7 +40,7 @@
 ;; 
 ;;
 (defroutes app
-  (GET "/" [] (resource-response "public/nxtui/main.html")) 
+  (GET "/" [] (resource-response "public/index.html")) 
   (GET "/about" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" request))
   (GET "/withdraw" request {:status  200
                             :headers {"Content-Type" "application/html"}

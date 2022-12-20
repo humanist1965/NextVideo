@@ -1,0 +1,150 @@
+body {
+    font-family: monospace, monospace; 
+}
+
+h1 {
+    color: #d3d3d3; 
+    text-align: center;
+}
+
+.topright {
+    position:fixed;
+    width:100px;
+    height:100px;
+    background:red;
+    right:10px;
+    top:10px;
+    z-index: -1;
+}
+
+.JumpBotton {
+    background-color: yellow;
+}
+body {
+    counter-reset: testCount;
+}
+
+.test {
+    background-color: cyan;
+
+}
+
+.test::before {              
+    content: "[" counter(testCount) "]"; 
+    counter-increment: testCount; 
+    font-weight: bold;
+}
+
+.topLeft, .topRight, .bottomLeft, .bottomRight  {
+    background-color: blue;
+    opacity: 0.1;
+    width:100px;
+    height:100px;
+}
+
+.profilePerson {
+    cursor: pointer;
+}
+.topLeft {
+    position:fixed;
+    left:10px;
+    top:10px;
+
+} 
+.topRight {
+    background-color: transparent;
+    opacity: 1.0;
+    position:fixed;
+    right:10px;
+    top:10px;
+
+} 
+
+.infoIcon {
+    z-index: 999999;
+    background-color:transparent;
+    position:fixed; 
+    right:50px;
+    top:5px;
+    width: 50px;
+    height: 50px;
+}
+
+.bottomPage {
+    position: fixed;
+    left:10px;
+    bottom:10px;
+}
+.bottomLeft {
+    position:fixed;
+    display:none; /* Turn this off */
+    left:10px;
+    bottom:10px;
+} 
+.bottomRight  {
+    position:fixed;
+    display:none; /* Turn this off */
+    right:10px;
+    bottom:10px;
+}
+
+.debugConsole {
+    z-index: -100;
+    display:block; /* Turn this off */
+    position:fixed;
+    left:200px;
+    bottom:10px; 
+}
+
+.centerIt {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
+
+.manualIncBar {
+    position:relative;
+    left:0px;
+    bottom:0px;
+} 
+
+.floatRight {
+    float: right;
+    z-index: 1000;
+}
+
+.floatLeft {
+    float: left;
+    z-index: 1000;
+}
+
+.incControl {
+    width: 30px;
+    height: 30px;
+}
+
+.helpText {
+    color: red;
+    text-align:center;
+    font-size: xx-small;
+}
+
+.playItCursor {
+    cursor: progress;
+    display: block;
+    max-width:500px;
+    max-height:243px;
+    width: auto;
+    height: auto;
+}
+
+.row:last-child {
+    position: fixed;
+    bottom: 0;
+}
