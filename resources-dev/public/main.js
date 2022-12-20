@@ -126,7 +126,7 @@ function callJSON(url, responseHandler, errorHandler) {
 function getURL(relPath){
   //var base1 = "http://18.130.245.71:5000/"; //AWS Server
   // ec2-3-140-251-38.us-east-2.compute.amazonaws.com
-  var base1 = "http://ec2-3-140-251-38.us-east-2.compute.amazonaws.com:5000"
+  var base1 = "http://ec2-54-217-28-69.eu-west-1.compute.amazonaws.com:5000"
   var base2 = "http://127.0.0.1:5000";
   var base = base1;
   return base + relPath;
@@ -226,7 +226,7 @@ function init(){
 
 
 jQuery(document).ready(function($){
-  //DEBUG("JQuery Ready called");
+  DEBUG("JQuery Ready called");
 
   $(window).on('popstate',function(){
     //DEBUG("POPSTATE Force Reload");
