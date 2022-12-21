@@ -42,7 +42,7 @@ var app = new Vue({
       series = data.seriesList[currentSelectedCarouselIndex];
       console.log("GotoPrevSeason");
       console.log( "SeriesID: " + series.seriesID );
-      callJSON(getURL("/Series/") + series.seriesID + "/DecSeason",
+      callJSON(getURL2("/Series/") + series.seriesID + "/DecSeason",
         // Not sure why but I need to do a $forceUpdate() on the Vue App to get it to refresh properly
         function (data2){data.seriesList[currentSelectedCarouselIndex] = data2; app.$forceUpdate();},
         function (error){console.log("Server Error:" + error);},
@@ -62,7 +62,7 @@ var app = new Vue({
     GotoNextSeason: function () {
       console.log("GotoNextSeason");
       series = data.seriesList[currentSelectedCarouselIndex];
-      callJSON(getURL("/Series/") + series.seriesID + "/IncSeason",
+      callJSON(getURL2("/Series/") + series.seriesID + "/IncSeason",
         // Not sure why but I need to do a $forceUpdate() on the Vue App to get it to refresh properly
         function (data2){data.seriesList[currentSelectedCarouselIndex] = data2; app.$forceUpdate();},
         function (error){console.log("Server Error:" + error);},
@@ -130,6 +130,11 @@ function getURL(relPath){
   var base2 = "http://127.0.0.1:5000";
   var base = base1;
   return base + relPath;
+}
+
+// getURL2 returns URL for new clojure webserver
+function getURL2(relPath){
+  return relPath;
 }
 
 function getUserParam(){

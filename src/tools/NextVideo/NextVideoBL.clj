@@ -53,9 +53,7 @@
                              watchListExt all-list) 
         
         watchListDict (reduce (fn [res it]
-                                (let [seriesID (get it :seriesID)
-                                      _ (prn "add to dict:" seriesID)
-                                      ]
+                                (let [seriesID (get it :seriesID)]
                                   (assoc res seriesID it))) {} watchListExt) 
         ]
     (reset! WATCH_LIST_DICT watchListDict)
@@ -92,7 +90,7 @@
 
 (defn loadSeasonData [seriesID curSeasonNum] 
    (let [key (str seriesID curSeasonNum)
-         seasonData (db/getYAML key)]
+         seasonData (try (db/getYAML key) (catch Exception _ nil))]
      seasonData
      )
   )
@@ -139,8 +137,11 @@
         eps-obj (get-next-episode seriesID)]
     (if eps-obj (save-user-data userID)
         (let [curSeasonNum (+ curSeasonNum incNum)
-              curSeasonNum (if (< curSeasonNum 0) 1 curSeasonNum)
-              season-len (count (loadSeasonData seriesID curSeasonNum))
+              curSeasonNum (if (<= curSeasonNum 0) 1 curSeasonNum)
+              season-data (loadSeasonData seriesID curSeasonNum)
+              curSeasonNum (if season-data curSeasonNum 1)
+              season-data (if season-data season-data (loadSeasonData seriesID curSeasonNum))
+              season-len (count season-data)
               curEpisodeNum (if (< incNum 0) season-len 1)]
           (update-user-data seriesID :currentSeasonNumber curSeasonNum)
           (update-user-data seriesID :nextEpisodeNumber curEpisodeNum)
@@ -150,14 +151,17 @@
 
 (comment
 
+  ;; testing the above
+  
   (now-datetime)
-  (loadSeasonData "WIRE" 2)
+  (loadSeasonData "WIRE" 5)
   (play-episode-num "mark" "WIRE")
-  (update-user-data "WIRE" :nextEpisodeNumber 1)
-  (for [_i (range 8)](inc-episode-num "mark" "WIRE" -1))
+  (update-user-data "WIRE" :currentSeasonNumber 5)
+  (update-user-data "WIRE" :nextEpisodeNumber 10)
+  (for [_i (range 1)](inc-episode-num "mark" "WIRE" 1))
+  (loadSeasonData "WIRE" 5)
   (load-user-data "mark")
   (get-next-episode "WIRE")
-
   (db/getYAML "AllSeriesList")
   (load-user-data "mark")
 

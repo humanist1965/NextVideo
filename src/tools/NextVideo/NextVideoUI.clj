@@ -1,19 +1,16 @@
-(ns tools.NextVideo.NextVideoUI 
-(:use [ring.middleware.file :only [wrap-file]])  
-(:require [compojure.core :refer :all]
-          [compojure.route :as route]
-          [ring.adapter.jetty :as jet]
-          [ring.middleware.reload :as reload]
-          [ring.middleware.params :as wrap]
-          [ring.middleware.resource :as res]
-          [ring.util.response :as resp]
-          [clojure.java.shell :as sh]
-          [clojure.string :as str]
-          [clojure.data.json :as json]
-          [clojure.java.io :as io]
-          )   
-
-)
+(ns tools.NextVideo.NextVideoUI
+  (:use [ring.middleware.file :only [wrap-file]])
+  (:require [compojure.core :refer :all]
+            [compojure.route :as route]
+            [ring.adapter.jetty :as jet]
+            [ring.middleware.reload :as reload]
+            [ring.middleware.params :as wrap]
+            [ring.middleware.resource :as res]
+            [ring.util.response :as resp]
+            [clojure.java.shell :as sh]
+            [clojure.string :as str]
+            [clojure.data.json :as json]
+            [clojure.java.io :as io]))
 
 
 (defonce DEBUG-BUFFER (atom []))
@@ -33,21 +30,61 @@
   (slurp (str @RESOURCE_ROOT relpath))
   )
 
-(show-debug)
-(clear-debug)
+(defn get-JSON-response [func request]
+  {:status  200
+   :headers {"Content-Type" "application/json"}
+   :body  (func request)}
+  )
+
+;; get UID
+(defn getUserID [request] )
+
+(defn get-all-series [request]
+  (DEBUG "get-all-series called")
+  )
+;; :seriesID in :params
+(defn get-series [request]
+   (DEBUG "get-series called")
+  )
+(defn get-watchlist [request]
+  (DEBUG "get-watchlist called")
+  )
+
+(defn play-series [request]
+   (DEBUG "play-series called")
+  )
+
+(defn inc-series [request]
+  (DEBUG "inc-series called")
+  )
+(defn dec-series [request]
+  (DEBUG "dec-series called")
+  )
+
+(defn inc-season [request]
+   (DEBUG "inc-season called")
+  )
+(defn dec-season [request]
+   (DEBUG "dec-season called")
+  )
+
+
 ;; *********************************
 ;; Define the possible routes of our webserver
 ;; 
 ;;
 (defroutes app
-  (GET "/" [] (resource-response "public/index.html")) 
-  (GET "/about" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" request))
-  (GET "/withdraw" request {:status  200
-                            :headers {"Content-Type" "application/html"}
-                            :body  "<h1>Withdraw</h1>"})
-  (GET "/check" request {:status  200
-                         :headers {"Content-Type" "application/html"}
-                         :body  "<h1>Withdraw</h1>"})
+  (GET "/" [] (resource-response "public/index.html"))
+  (GET "/about/:id" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" (:id (:params request)) request))
+  (GET "/Series" request (get-JSON-response get-all-series request))
+  (GET "/WatchList" request (get-JSON-response get-watchlist request))
+  (GET "/Series/:seriesID" request (get-JSON-response get-series request))
+  (GET "/Series/:seriesID/Play" request (get-JSON-response play-series request))
+  (GET "/Series/:seriesID/Inc" request (get-JSON-response inc-series request))
+  (GET "/Series/:seriesID/Dec" request (get-JSON-response dec-series request))
+  (GET "/Series/:seriesID/IncSeason" request (get-JSON-response inc-season request))
+  (GET "/Series/:seriesID/DecSeason" request (get-JSON-response dec-season request)) 
+
   (route/not-found "<h1>Page not found</h1>"))
 
 ;; https://github.com/ring-clojure/ring/issues/104
@@ -67,6 +104,9 @@
 
   (start-bookmark-server) ;; http://localhost:3002
   (stop-bookmarkserver)
+  
+  (show-debug)
+  (clear-debug)
 
 ;; Not picking up main.js
 
