@@ -9,6 +9,9 @@
 (defn now-datetime []
   (.format (java.text.SimpleDateFormat. "yyyy-MM-dd HH.MM.SS") (new java.util.Date)))
 
+(defonce WATCH_LIST_DICT (atom {}))
+(defonce WATCH_LIST (atom []))
+(defonce ALL_LIST (atom []))
 
 (defn load-user-data [userID]
   (let [all-list (db/getYAML "AllSeriesList")
@@ -16,7 +19,7 @@
                            (assoc res (get it "seriesID") it)) {} all-list)
         watchListKeys (db/getSubKeys userID)
         watchList (reduce (fn [res it]
-                            (let [user-obj (db/get-obj it)]
+                            (let [user-obj (db/getObj it)]
                               (conj res user-obj)))
                           [] watchListKeys)
         watchList (sort watchList)
@@ -43,24 +46,52 @@
 
         watchListDict (reduce (fn [res it]
                                 (let [seriesID (get it "seriesID")]
-                                  (assoc res seriesID it))) {} watchListExt)]
+                                  (assoc res seriesID it))) {} watchListExt) 
+        ]
+    (reset! WATCH_LIST_DICT watchListDict)
+    (reset! WATCH_LIST watchListExt)
+    (reset! ALL_LIST all-list)
     {:all-list all-list :watchList watchListExt :watchListDict watchListDict}))
 
 (defn get-watch-list-dict [userID seriesID]
   (get-in (load-user-data userID) [:watchListDict seriesID]) 
   )
 
-(defn save-user-data [])
+(defn save-user-data [userID]
+  (map (fn [[_ it]]
+         (let [seriesID (get it "seriesID")
+               key (str userID "/" seriesID)]
+           (db/storeJSON key it)))
+       @WATCH_LIST_DICT)
+  
+  )
 
 (defn update-user-data [userID seriesID attr val] 
+  (let [watchlist @WATCH_LIST_DICT
+        userObj (get watchlist seriesID)
+        userObj (assoc userObj attr val) 
+        watchlist (assoc watchlist seriesID userObj)
+        ]
+    (reset! WATCH_LIST_DICT watchlist)
+    )
   )
 
 
 
-(defn loadSeasonData [seriesID curSeasonNum]
+(defn loadSeasonData [seriesID curSeasonNum] 
+   (let [key (str seriesID curSeasonNum)
+         seasonData (db/getYAML key)]
+     seasonData
+     )
   )
 
-(defn get-episode-data [season-data curEpisodeNum])
+(defn get-episode-data [season-data curEpisodeNum]
+  (let [curEpisodeNum (Integer/parseInt (str curEpisodeNum))
+        maxLen (count season-data)
+        _ (assert (and (< curEpisodeNum maxLen) (> curEpisodeNum 0)) "ERROR: Episode Index out of range")
+        curEpisodeNum (- curEpisodeNum 1)]
+    (nth season-data curEpisodeNum)))
+
 
 (defn list-all-series [userID]
   (:all-list (load-user-data userID))
