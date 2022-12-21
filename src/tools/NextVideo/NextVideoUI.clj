@@ -22,8 +22,12 @@
   (doall (map #(prn %2 %1) @DEBUG-BUFFER (iterate inc 1)))
   nil
   )
-(defn DEBUG [msg]
-  (reset! DEBUG-BUFFER (conj @DEBUG-BUFFER msg)))
+(defn DEBUG [msg & args]
+ (let [args-str (reduce (fn [res it] (str res " " it)) "" args)
+       msg (str msg args-str)]
+   (reset! DEBUG-BUFFER (conj @DEBUG-BUFFER msg)))
+  
+  )
 
 
 (defonce RESOURCE_ROOT (atom "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
@@ -43,7 +47,11 @@
   )
 
 ;; get UID
-(defn getUserID [request] )
+(defn getUserID [request]
+  (let [uid (get (:params request) "UID")
+        uid (str/lower-case uid)]
+    (DEBUG "getUserID" uid)
+    uid))
 
 (defn get-all-series [request]
   (DEBUG "get-all-series called")
@@ -71,9 +79,11 @@
 
 (defn inc-season [request]
    (DEBUG "inc-season called")
+   (getUserID request)
   )
 (defn dec-season [request]
    (DEBUG "dec-season called")
+  (getUserID request)
   )
 
 
