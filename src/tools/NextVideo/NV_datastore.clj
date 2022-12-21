@@ -97,7 +97,7 @@
 (defn storeJSON [relPath obj]
   (let [json-str (json/write-str obj)
         fpath (str @DBROOT relPath)
-        fpath (opt-add-seperator fpath)
+        fpath (opt-add-seperator fpath) 
         fpath (str fpath "data.json") 
         _ (io/make-parents fpath)]
     (spit fpath json-str)))
