@@ -16,14 +16,17 @@
     (if (= last-ch \/) fpath (str fpath "/"))))
 
 (defonce DBROOT (init "src/tools/NextVideo/$$DATASTORE$$/"))
+(defonce YAMLROOT (init "src/tools/NextVideo/YAML_FILES/"))
 
 ;; https://rosettacode.org/wiki/Walk_a_directory/Recursively#Clojure
 (defn walk-dir [dirpath pattern]
   (doall (filter #(re-matches pattern (.getName %))
                  (file-seq (io/file dirpath)))))
 
-(defn map-all-files [dirpath func]
-  (map func (walk-dir dirpath #".*\.*")))
+(defn map-all-files 
+  ([dirpath func](map-all-files dirpath func #".*\.*"))
+  ([dirpath func pattern]
+  (map func (walk-dir dirpath pattern))))
 
 
 (defn walk-directory-recursive
@@ -48,7 +51,8 @@
     edn-obj))
 
 (defn getYAML [relPath]
-  (let [fpath (str @DBROOT relPath)
+  (let [fpath (str relPath ".yml")
+        fpath (str @YAMLROOT fpath)
         fpath (opt-add-seperator fpath)]
     (yaml-file-to-edn fpath))
   )
@@ -57,23 +61,35 @@
   (let [fpath (str @DBROOT relPath)
         fpath (opt-add-seperator fpath) 
         ]
-    (walk-directory-recursive fpath {:include-dirs? false :top-level-only? true}))
+    (walk-directory-recursive fpath {:include-dirs? false :top-level-only? false})
+    (map-all-files fpath identity #".*\.json")
+    )
   )
 
 (defn convertJsonFileToEdn [fn]
   (let [fileStr (slurp fn)]
     (json/read-str fileStr)))
 
-(defn getJSON [relPath]
-   (let [fpath (str @DBROOT relPath)
-         fpath (opt-add-seperator fpath)]
-     (slurp fpath))
+(defn getJSON [absPath]
+;;    (let [fpath (str @DBROOT relPath)
+;;          fpath (opt-add-seperator fpath)]
+     (slurp absPath)
+     
+    ;; )
   
   )
 
+(defn convert-to-keywords [obj]
+  (reduce (fn [res [key1 it]]
+            (let [keywd1 (keyword key1)]
+              (assoc res keywd1 it)))
+          {} obj))
+
 (defn getObj [relPath]
   (let [json-str (getJSON relPath)
-        obj (json/read-str json-str)]
+        obj (json/read-str json-str)
+        obj (convert-to-keywords obj)
+        ]
     obj))
   
   

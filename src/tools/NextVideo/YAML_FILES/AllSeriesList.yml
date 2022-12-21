@@ -1,0 +1,222 @@
+---
+# List of all Series currently supported by NextVideo App
+
+-
+  seriesID: GOT   # This is also used to attach to Season information *.yml files
+  name: "Game of Thrones"
+  image: images/GOT2.jpg
+  infoUrl: https://www.themoviedb.org/tv/1399-game-of-thrones/season/${S}/episode/${E}
+
+- 
+  seriesID: BigBang 
+  name: "The Big Bang Theory"
+  image: images/TBBT.jpg
+  infoUrl: https://www.themoviedb.org/tv/1418-the-big-bang-theory/season/${S}/episode/${E}
+
+- 
+  seriesID: Billions 
+  name: "Billions"
+  image: images/Billions.jpg
+  infoUrl: https://www.themoviedb.org/tv/62852-billions/season/${S}/episode/${E} 
+
+- 
+  seriesID: WestWorld 
+  name: "WestWorld"
+  image: images/Westworld.jpg
+  infoUrl: https://www.themoviedb.org/tv/63247-westworld/season/${S}/episode/${E}
+
+- 
+  seriesID: SF 
+  name: "Seinfeld"
+  image: images/Seinfeld.jpg
+  infoUrl: https://www.themoviedb.org/tv/1400-seinfeld/season/${S}/episode/${E}
+
+- 
+  seriesID: SV 
+  name: "Silicon Valley"
+  image: images/siliconvalley.jpg
+  infoUrl: https://www.themoviedb.org/tv/60573-silicon-valley/season/${S}/episode/${E}
+
+- 
+  seriesID: GLEE 
+  name: "Glee"
+  image: images/glee.jpg
+  infoUrl: https://www.themoviedb.org/tv/1417-glee/season/${S}/episode/${E}
+
+- 
+  seriesID: MANH 
+  name: "Manhattan"
+  image: images/manh.jpg
+  infoUrl: https://www.themoviedb.org/tv/61112-manhattan/season/${S}/episode/${E}
+
+-
+  seriesID: MRROBOT 
+  name: "Mr Robot"
+  image: images/mrrobot.jpg
+  infoUrl: https://www.themoviedb.org/tv/62560-mr-robot/season/${S}/episode/${E}
+
+-
+  seriesID: WDEAD 
+  name: "Walking Dead"
+  image: images/wdead.jpg
+  infoUrl: https://www.themoviedb.org/tv/1402-the-walking-dead/season/${S}/episode/${E}
+
+-
+  seriesID: DOWNA 
+  name: "Downton Abbey"
+  image: images/downa.jpg
+  infoUrl: https://www.themoviedb.org/tv/33907-downton-abbey/season/${S}/episode/${E}
+
+-
+  seriesID: LTOWER 
+  name: "Looming Tower"
+  image: images/ltower.jpg
+  infoUrl: https://www.themoviedb.org/tv/70721-the-looming-tower/season/${S}/episode/${E}
+
+-  
+  seriesID: SUNNYP 
+  name: "It's Always Sunny in Philadephia"
+  image: images/sunnyp.jpg
+  infoUrl: https://www.themoviedb.org/tv/2710-it-s-always-sunny-in-philadelphia/season/${S}/episode/${E}
+
+-
+  seriesID: VIKINGS 
+  name: "Vikings"
+  image: images/vikings.jpg
+  infoUrl: https://www.themoviedb.org/tv/44217-vikings/season/${S}/episode/${E}
+
+-
+  seriesID: BLLIES 
+  name: "Big Little Lies"
+  image: images/bllies.jpg
+  infoUrl: https://www.themoviedb.org/tv/66292-big-little-lies/season/${S}/episode/${E}
+
+-
+  seriesID: WIRE 
+  name: "The Wire"
+  image: images/wire.jpg
+  infoUrl: https://www.themoviedb.org/tv/1438-the-wire/season/${S}/episode/${E}
+
+-
+  seriesID: CURB
+  name: "Curb Your Enthusiasm"
+  image: images/curb.jpg
+  infoUrl: https://www.themoviedb.org/tv/4546-curb-your-enthusiasm/season/${S}/episode/${E}
+
+-
+  seriesID: BORG 
+  name: "Borgias"
+  image: images/borgias.jpg
+  infoUrl: https://www.themoviedb.org/tv/33025-the-borgias/season/${S}/episode/${E}
+
+-
+  seriesID: SEXAC 
+  name: "Sex and the City"
+  image: images/sexac.jpg
+  infoUrl: https://www.themoviedb.org/tv/105-sex-and-the-city/season/${S}/episode/${E}
+
+-  
+  seriesID: MMM 
+  name: "The Marvelous Mrs Maisel "
+  image: images/mmm2.jpg
+  infoUrl: https://www.themoviedb.org/tv/70796-the-marvelous-mrs-maisel/season/${S}/episode/${E}
+
+-  
+  seriesID: SOP 
+  name: "The Sopranos"
+  image: images/sopranos.jpg
+  infoUrl: https://www.themoviedb.org/tv/1398-the-sopranos/season/${S}/episode/${E}
+
+-  
+  seriesID: BOARDW 
+  name: "Boardwalk Empire"
+  image: images/boardw.jpg
+  infoUrl: https://www.themoviedb.org/tv/1621-boardwalk-empire/season/${S}/episode/${E}
+
+-  
+  seriesID: AUFW 
+  name: "Auf Wiedersehen Pet"
+  image: images/AUFW.jpg
+  infoUrl: https://www.themoviedb.org/tv/4628-auf-wiedersehen-pet/season/${S}/episode/${E}
+
+-  
+  seriesID: UNDO 
+  name: "Undoing"
+  image: images/undo.jpg
+  infoUrl: https://www.themoviedb.org/tv/83851-the-undoing/season/${S}/episode/${E}
+
+-  
+  seriesID: MARE 
+  name: "Mare of Easttown"
+  image: images/mare.jpg
+  infoUrl: https://www.themoviedb.org/tv/115004-mare-of-easttown/season/${S}/episode/${E}
+
+-  
+  seriesID: WHITEC 
+  name: "Whitechapel"
+  image: images/whitec.jpg
+  infoUrl: https://www.themoviedb.org/tv/17450-whitechapel/season/${S}/episode/${E}
+
+-  
+  seriesID: VINYL 
+  name: "Vinyl"
+  image: images/vinyl.jpg
+  infoUrl: https://www.themoviedb.org/tv/63535-vinyl/season/${S}/episode/${E}
+
+
+-  
+  seriesID: FARGO 
+  name: "Fargo"
+  image: images/fargo.jpg
+  infoUrl: https://www.themoviedb.org/tv/60622-fargo/season/${S}/episode/${E}
+
+-  
+  seriesID: FOUNDATION 
+  name: "Foundation"
+  image: images/foundation.jpg
+  infoUrl: https://www.themoviedb.org/tv/93740-foundation/season/${S}/episode/${E}
+
+-  
+  seriesID: THEAMERICANS 
+  name: "The Americans"
+  image: images/theamericans.jpg
+  infoUrl: https://www.themoviedb.org/tv/46533-the-americans/season/${S}/episode/${E}
+
+-  
+  seriesID: SUCCESS 
+  name: "Succession"
+  image: images/success.jpeg
+  infoUrl: https://www.themoviedb.org/tv/76331-succession/season/${S}/episode/${E}
+
+-  
+  seriesID: MANCASTLE 
+  name: "The Man In The High Castle"
+  image: images/mancastle.jpg
+  infoUrl: https://www.themoviedb.org/tv/62017-the-man-in-the-high-castle/season/${S}/episode/${E}
+
+-  
+  seriesID: THICKOFIT  
+  name: "The Thick Of It"
+  image: images/thickofit.jpg
+  infoUrl: https://www.themoviedb.org/tv/4507-the-thick-of-it/season/${S}/episode/${E}
+
+-  
+  seriesID: AGOD  
+  name: "American Gods"
+  image: images/agod.jpg
+  infoUrl: https://www.themoviedb.org/tv/46639-american-gods/season/${S}/episode/${E}
+
+-  
+  seriesID: DEVILS  
+  name: "Devils"
+  image: images/devils.jpeg
+  infoUrl: https://www.themoviedb.org/tv/99741-devils/season/${S}/episode/${E}
+
+-  
+  seriesID: HOD  
+  name: "House Of Dragons"
+  image: images/hod.jpg
+  infoUrl: https://www.themoviedb.org/tv/94997-house-of-the-dragon/season/${S}/episode/${E}
+
+
+

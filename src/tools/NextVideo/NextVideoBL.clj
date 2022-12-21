@@ -3,6 +3,7 @@
             [clojure.data.json :as json]
             [clojure.java.io :as io]
             [tools.NextVideo.NV_datastore :as db]
+             [clojure.pprint :as pp]
             ))
 
 
@@ -16,42 +17,69 @@
 (defn load-user-data [userID]
   (let [all-list (db/getYAML "AllSeriesList")
         all-dict (reduce (fn [res it]
-                           (assoc res (get it "seriesID") it)) {} all-list)
+                           (assoc res (get it :seriesID) it)) {} all-list)
         watchListKeys (db/getSubKeys userID)
         watchList (reduce (fn [res it]
                             (let [user-obj (db/getObj it)]
                               (conj res user-obj)))
                           [] watchListKeys)
-        watchList (sort watchList)
+       
+        watchList (sort (fn [it1 it2]
+                          (let [lwd1 (:lastWatchedDate it1)
+                                lwd2 (:lastWatchedDate it2)]
+                            (compare lwd2 lwd1)))
+                        watchList)
+        
+        
         consideredList (reduce (fn [res it]
-                                 (let [seriesID (get it "seriesID")]
+                                 (let [seriesID (get it :seriesID)]
                                    (assoc res seriesID true))) {} watchList)
         watchListExt (mapv (fn [obj]
-                             (let [seriesID (get obj "seriesID")
+                             (let [seriesID (get obj :seriesID)
                                    glob-obj (get all-dict seriesID)
-                                   name (get glob-obj "name")
-                                   image (get glob-obj "image")]
-                               (merge obj {"name" name "image" image})))
+                                   name (get glob-obj :name)
+                                   image (get glob-obj :image)]
+                               (merge obj {:name name :image image})))
                            watchList)
-
+        _ (pp/pprint watchListExt)
+_ (assert false "STOP")
         ;; At the moment as part of MVP include any missing global items onto the user watchList
         ;; May change this in future to require users to add Series they want to watch
         ;;
         watchListExt (reduce (fn [res it]
-                               (let [seriesID (get it "seriesID")
+                               (let [seriesID (get it :seriesID)
                                      alreadyIn? (get consideredList seriesID)]
                                  (if alreadyIn? res
-                                     (conj res (merge it {"currentSeasonNumber" 1 "nextEpisodeNumber" 1 "lastWatchedDate" "1900-01-01"})))))
+                                     (conj res (merge it {:currentSeasonNumber 1 :nextEpisodeNumber 1 :lastWatchedDate "1900-01-01"})))))
                              watchListExt all-list)
 
         watchListDict (reduce (fn [res it]
-                                (let [seriesID (get it "seriesID")]
+                                (let [seriesID (get it :seriesID)
+                                      _ (prn "add to dict:" seriesID)
+                                      ]
                                   (assoc res seriesID it))) {} watchListExt) 
         ]
     (reset! WATCH_LIST_DICT watchListDict)
     (reset! WATCH_LIST watchListExt)
     (reset! ALL_LIST all-list)
-    {:all-list all-list :watchList watchListExt :watchListDict watchListDict}))
+    (prn "load-user-data into @WATCH_LIST_DICT @WATCH_LIST @ALL_LIST")
+    
+    ))
+
+(comment
+  
+  (load-user-data "mark")
+  @WATCH_LIST_DICT
+  
+  (db/getSubKeys "mark")
+  (let [key1 (first (db/getSubKeys "mark"))]
+    (db/getObj key1))
+  
+  (db/getYAML "AllSeriesList")
+  
+
+  ;;
+  )
 
 (defn get-watch-list-dict [userID seriesID]
   (get-in (load-user-data userID) [:watchListDict seriesID]) 
@@ -139,7 +167,8 @@
 
 (comment
   
-  (now-datetime)
+  (db/getYAML "AllSeriesList")
+  (load-user-data "mark")
   
   ;;
   )
