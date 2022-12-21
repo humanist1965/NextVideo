@@ -10,12 +10,18 @@
             [clojure.java.shell :as sh]
             [clojure.string :as str]
             [clojure.data.json :as json]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [clojure.pprint :as pp]
+            ))
 
 
 (defonce DEBUG-BUFFER (atom []))
 (defn clear-debug [] (reset! DEBUG-BUFFER []))
-(defn show-debug [] @DEBUG-BUFFER)
+(defn show-debug [] 
+  (prn "DEBUG OUTPUT:")
+  (doall (map #(prn %2 %1) @DEBUG-BUFFER (iterate inc 1)))
+  nil
+  )
 (defn DEBUG [msg]
   (reset! DEBUG-BUFFER (conj @DEBUG-BUFFER msg)))
 
@@ -33,7 +39,7 @@
 (defn get-JSON-response [func request]
   {:status  200
    :headers {"Content-Type" "application/json"}
-   :body  (func request)}
+   :body  (json/write-str (func request))}
   )
 
 ;; get UID
@@ -56,9 +62,11 @@
 
 (defn inc-series [request]
   (DEBUG "inc-series called")
+  {:ret 1}
   )
 (defn dec-series [request]
   (DEBUG "dec-series called")
+  {:ret 1}
   )
 
 (defn inc-season [request]

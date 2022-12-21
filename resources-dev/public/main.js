@@ -146,7 +146,7 @@ function isActiveAux (index) {
 }
 
 function getSeriesList(){
-  console.log("getSeriesList called");
+  console.log("getSeriesList called xxxx");
   //getSeriesListMockUp();
   getSeriesListReal()
 }
@@ -159,7 +159,7 @@ function getSeriesListMockUp(){
 function getSeriesListReal(){
   callJSON(getURL("/WatchList"),
         function (data2){data.seriesList = data2;
-          console.log(JSON.stringify(data2));
+          //console.log(JSON.stringify(data2));
         },
         function (error){console.log("Server Error:" + error);},
       );
