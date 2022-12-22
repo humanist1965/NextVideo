@@ -172,10 +172,10 @@
   ;; Using two middleware handlers here
   (res/wrap-resource (wrap/wrap-params (reload/wrap-reload #'app)) "public"))
 
-(defonce server (jet/run-jetty #'app-with-reload {:join? false :port 3002}))
+(defn server [] (jet/run-jetty #'app-with-reload {:join? false :port 3002}))
 
-(defn start-bookmark-server [] (.start server))
-(defn stop-bookmarkserver [] (.stop server))
+(defn start-bookmark-server [] (.start (server)))
+(defn stop-bookmarkserver [] (.stop (server)))
 
 
 (comment

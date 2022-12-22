@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :min-lein-version "2.0.0" 
-  ;;:uberjar {:main repl_start}
+  :uberjar {:main repl_start}
   :uberjar-name "nextvideo.jar"
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "1.3.610"]

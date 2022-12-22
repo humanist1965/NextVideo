@@ -1,8 +1,7 @@
 (ns repl_start
   (:require [tools.NextVideo.NextVideoUI :as nv]
-             [clojure.java.shell :as sh]
-            )
-  )
+            [clojure.java.shell :as sh])
+  (:gen-class))
 
 ;; This is the main function that will get called when you start using:
 ;; lein run
