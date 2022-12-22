@@ -8,27 +8,88 @@
             [clj-yaml.core :as yaml]
             ))
 
-
-(defn isHttpURL [url])
-
-(defn _getHttpURL [url])
-
-(defn _getStrFromFile [relFilePath])
-
-(defn _extractVideoLinks [searchStr])
-
-(defn _saveToYAMLFile [seriesID seasonNum outStr])
-
-(defn createYAMLfromTVHOMEUrl [seriesID seasonNum url])
+(defn init [rootpath]
+  (io/make-parents rootpath)
+  (atom rootpath))
 
 
+
+(defonce ROOTDIR (init "src/tools/NextVideo/"))
+(defonce YAMLROOT (init (str @ROOTDIR "YAML_FILES/")))
+
+
+(defn get-html-filepath [relpath]
+  (str @ROOTDIR relpath)
+  )
+
+(defn get-yaml-filepath [relpath]
+  (str @YAMLROOT relpath))
+
+(defn isHttpURL [url]
+  (str/includes? url "http:"))
+
+
+(defn _getHttpURL [url]
+  (assert false "ERROR: Not implemented yet!!")
+  )
+
+(defn _getStrFromFile [relFilePath] 
+  (let [fpath (get-html-filepath relFilePath) 
+        file-str (slurp fpath)]
+    file-str))
+
+(defn _extractVideoLinks [searchStr]
+  (let [regExpStr #"href=\"/play.php.*\""]
+    (re-seq regExpStr searchStr)
+    )
+  )
+
+(defn _saveToYAMLFile [seriesID seasonNum outStr]
+  (let [relpath (str seriesID seasonNum ".yml")
+        filepath (get-yaml-filepath relpath)]
+    (if (.exists (io/file filepath))
+      ;;(prn "Error file already exists - aborting!:" filepath)
+      (spit filepath outStr)
+      (spit filepath outStr)))
+  )
+
+(defn enumerate [lst1]
+  (mapv (fn [it i] [i it]) lst1 (iterate inc 1))
+  )
+
+(defn createYAMLfromTVHOMEUrl [seriesID seasonNum url]
+  (let [urlData (if (isHttpURL url) (_getHttpURL url) (_getStrFromFile url))
+        episodeList (_extractVideoLinks urlData)
+        episodeList (map (fn [it]
+                           (let [modIt (subs it 6)
+                                 modIt (subs modIt 0 (dec (count modIt)))
+                                 modIt (str "http://tvhome.cc" modIt)
+                                 modIt (if (or (str/ends-with? modIt "|1")
+                                               (str/ends-with? modIt "|2"))
+                                         (subs modIt 0 (- (count modIt) 2))
+                                         modIt)]
+                             modIt)) episodeList)
+        episodeList (rest (reverse episodeList)) ;; reverse and remove first
+        outStr "---\n"
+        outStr (reduce (fn [res [i it]]
+                         (let [res (str res "-\n")
+                               res (str res "  episode: " i "\n")
+                               res (str res "  url: " it "\n")]
+                           res)) 
+                         outStr (enumerate episodeList))  
+        ]
+    (_saveToYAMLFile seriesID seasonNum outStr)))
+
+(subs "1234" 1 )
 
 (defn main []
-  (createYAMLfromTVHOMEUrl "WestWorld",1,"TVHOME_RAW/WestWorld1.html") 
+  (createYAMLfromTVHOMEUrl "WestWorld",1,"TVHOME_RAW/westworld1.html") 
   )
 
 (comment
-  (main)
-  
+  (main) 
+  (get-html-filepath "TVHOME_RAW/westworld1.html")
+  (createYAMLfromTVHOMEUrl "WestWorld",1,"TVHOME_RAW/westworld1.html")
+
   ;;
   )
