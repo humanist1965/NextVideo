@@ -46,6 +46,8 @@
    :body  (json/write-str (func request))}
   )
 
+(defonce UID (atom nil))
+
 ;; get UID
 (defn getUserID [request]
   (let [uid (get (:params request) "UID")
@@ -125,11 +127,6 @@
   
   (show-debug)
   (clear-debug)
-
-;; Not picking up main.js
-
-https://stackoverflow.com/questions/12336643/how-to-serve-video-files-to-the-ipad-using-jetty-ring
-  https://ring-clojure.github.io/ring/ring.middleware.file.html
   
 ;;
   )
