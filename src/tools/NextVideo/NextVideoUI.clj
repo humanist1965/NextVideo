@@ -13,6 +13,7 @@
             [clojure.java.io :as io]
             [clojure.pprint :as pp]
             [tools.NextVideo.NextVideoBL :as buslog]
+             [clojure.java.shell :as sh]
             ))
 
 
@@ -131,6 +132,20 @@
     (buslog/get-next-episode seriesID)
     ))
 
+(defn printClassPath []
+  (DEBUG "JAVA CLASSPATH - Has the following configuration:")
+  (DEBUG "===============")
+  (DEBUG (sort (str/split
+                    (System/getProperty "java.class.path")
+                    #":"))))
+
+(defn get-debug [_request] 
+  (DEBUG "cd:" (sh/sh "cd" "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
+  (DEBUG "PWD:" (sh/sh "pwd"))
+  ;;(DEBUG "CLASSPATH=" (printClassPath))
+  @DEBUG-BUFFER
+  )
+
 
 ;; *********************************
 ;; Define the possible routes of our webserver
@@ -141,6 +156,7 @@
   ;; test route, not used by program
   (GET "/about/:id" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" (:id (:params request)) request)) 
   ;;(GET "/Series" request (get-JSON-response get-all-series request)) 
+   (GET "/showdebug" request (get-JSON-response get-debug request))
   (GET "/WatchList" request (get-JSON-response get-watchlist request))
   ;;(GET "/Series/:seriesID" request (get-JSON-response get-series request))
   (GET "/Series/:seriesID/Play" request (get-JSON-response play-series request))
