@@ -1,6 +1,5 @@
 (ns repl_start
-  (:require [tools.NextVideo.NextVideoUI :as nv]
-            [clojure.java.shell :as sh])
+  (:require [tools.NextVideo.NextVideoUI :as nv])
   (:gen-class))
 
 ;; This is the main function that will get called when you start using:
@@ -10,9 +9,8 @@
 ;; is the startup function for us.
 ;;
 (defn -main []
-    (nv/DEBUG "Starting up NextVideo webserver")
-    (nv/DEBUG "PWD:" (sh/sh "pwd"))
-    (nv/start-bookmark-server) ;; http://localhost:3002 http://localhost:3002/showdebug
+    (nv/DEBUG "Starting up NextVideo webserver") 
+    (nv/start-bookmark-server) ;; http://localhost:8000 http://localhost:8000/showdebug
 )
 
 ;;(defonce start-up  (-main))

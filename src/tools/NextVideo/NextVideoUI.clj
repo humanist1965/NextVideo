@@ -40,9 +40,10 @@
   
   )
 
-
+;;
+;; Not using the local version of resource-response anymore.
+;;
 (defonce RESOURCE_ROOT (atom "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
-
 ;;
 ;; This is a local version of resp/resource-response
 ;; resp/resource-response is not always working for me because of classpath issues (when I share a REPL across projects)
@@ -152,7 +153,7 @@
 ;; 
 ;;
 (defroutes app
-  (GET "/" [] (resource-response "public/index.html"))
+  (GET "/" [] (resp/resource-response "public/index.html"))
   ;; test route, not used by program
   (GET "/about/:id" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" (:id (:params request)) request)) 
   ;;(GET "/Series" request (get-JSON-response get-all-series request)) 
@@ -172,7 +173,7 @@
   ;; Using two middleware handlers here
   (res/wrap-resource (wrap/wrap-params (reload/wrap-reload #'app)) "public"))
 
-(defn server [] (jet/run-jetty #'app-with-reload {:join? false :port 3002}))
+(defn server [] (jet/run-jetty #'app-with-reload {:join? false :port 8000}))
 
 (defn start-bookmark-server [] (.start (server)))
 (defn stop-bookmarkserver [] (.stop (server)))
@@ -182,7 +183,7 @@
   ;; *********************************************
   ;; [1] Start/Stop the webserver
 
-  (start-bookmark-server) ;; http://localhost:3002
+  (start-bookmark-server) ;; http://localhost:8000
   (stop-bookmarkserver)
   
   (show-debug)
