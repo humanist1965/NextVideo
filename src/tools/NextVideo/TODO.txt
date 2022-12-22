@@ -1,2 +1,6 @@
+
 [1] Support multiple UID at same time
 Currently the webserver is only supporting a single active UID 
+
+[2] Port NewSeries to Clojure
+Eventually make this more user friendly

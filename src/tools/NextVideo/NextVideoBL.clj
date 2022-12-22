@@ -126,6 +126,10 @@
     (save-user-data userID)
     ))
 
+;;
+;; next function can be used to inc/dec season and episode numbers
+;; NOTE: To inc/dec season pass a large incNum
+;;
 (defn inc-episode-num 
   ([userID seriesID](inc-episode-num userID seriesID 1))
   ([userID seriesID incNum]
@@ -136,7 +140,8 @@
         _ (update-user-data seriesID :nextEpisodeNumber curEpisodeNum)
         eps-obj (get-next-episode seriesID)]
     (if eps-obj (save-user-data userID)
-        (let [curSeasonNum (+ curSeasonNum incNum)
+        (let [seasonInc (if (< incNum 0) -1 1)
+              curSeasonNum (+ curSeasonNum seasonInc)
               curSeasonNum (if (<= curSeasonNum 0) 1 curSeasonNum)
               season-data (loadSeasonData seriesID curSeasonNum)
               curSeasonNum (if season-data curSeasonNum 1)

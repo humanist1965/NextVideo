@@ -90,7 +90,7 @@ body {
 
 .debugConsole {
     z-index: -100;
-    display:block; /* Turn this off */
+    display:none; /* Turn this off */
     position:fixed;
     left:200px;
     bottom:10px; 

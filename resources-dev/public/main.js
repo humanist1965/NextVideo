@@ -52,7 +52,7 @@ var app = new Vue({
     GotoPrevEpisode: function () {
       console.log("GotoPrevEpisode");
       series = data.seriesList[currentSelectedCarouselIndex];
-      callJSON(getURL("/Series/") + series.seriesID + "/Dec",
+      callJSON(getURL2("/Series/") + series.seriesID + "/Dec",
         // Not sure why but I need to do a $forceUpdate() on the Vue App to get it to refresh properly
         function (data2){data.seriesList[currentSelectedCarouselIndex] = data2; app.$forceUpdate();},
         function (error){console.log("Server Error:" + error);},
@@ -90,7 +90,7 @@ var app = new Vue({
       series = data.seriesList[currentSelectedCarouselIndex];
       actionStr = "/Inc";
       if (toPlayURL != null) actionStr = "/Play";
-      callJSON(getURL("/Series/") + series.seriesID + actionStr,
+      callJSON(getURL2("/Series/") + series.seriesID + actionStr,
         // Not sure why but I need to do a $forceUpdate() on the Vue App to get it to refresh properly
         function (data2){
           data.seriesList[currentSelectedCarouselIndex] = data2;
@@ -146,7 +146,7 @@ function isActiveAux (index) {
 }
 
 function getSeriesList(){
-  console.log("getSeriesList called xxxx");
+  console.log("getSeriesList called 11111");
   //getSeriesListMockUp();
   getSeriesListReal()
 }
@@ -157,7 +157,7 @@ function getSeriesListMockUp(){
 }
 
 function getSeriesListReal(){
-  callJSON(getURL("/WatchList"),
+  callJSON(getURL2("/WatchList"),
         function (data2){data.seriesList = data2;
           //console.log(JSON.stringify(data2));
         },

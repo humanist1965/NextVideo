@@ -12,10 +12,18 @@
             [clojure.data.json :as json]
             [clojure.java.io :as io]
             [clojure.pprint :as pp]
+            [tools.NextVideo.NextVideoBL :as buslog]
             ))
 
 
+;;
+;; *******************************************************************************
+;; Helper functions for debugging
+;; NOTE: These are needed because *out* is used by Jetty
+;;
+
 (defonce DEBUG-BUFFER (atom []))
+(defonce DEBUG-BUFFER-MAX (atom 50))
 (defn clear-debug [] (reset! DEBUG-BUFFER []))
 (defn show-debug [] 
   (prn "DEBUG OUTPUT:")
@@ -24,7 +32,9 @@
   )
 (defn DEBUG [msg & args]
  (let [args-str (reduce (fn [res it] (str res " " it)) "" args)
-       msg (str msg args-str)]
+       msg (str msg args-str)
+       buf-len (count @DEBUG-BUFFER)]
+   (when (>= buf-len @DEBUG-BUFFER-MAX) (reset! DEBUG-BUFFER []))
    (reset! DEBUG-BUFFER (conj @DEBUG-BUFFER msg)))
   
   )
@@ -53,40 +63,73 @@
   (let [uid (get (:params request) "UID")
         uid (str/lower-case uid)]
     (DEBUG "getUserID" uid)
+    (if (= @UID uid) uid
+        (do
+          (buslog/load-user-data uid)
+          (reset! UID uid)))
     uid))
 
 (defn get-all-series [request]
   (DEBUG "get-all-series called")
+  (getUserID request)
+  (buslog/list-all-series)
   )
+
 ;; :seriesID in :params
-(defn get-series [request]
-   (DEBUG "get-series called")
+(defn get-series [request] 
+  (DEBUG "get-series called")
+  (getUserID request)
+  (let [seriesID (:seriesID (:params request))]
+    (DEBUG "seriesID=" seriesID)
+    (buslog/get-next-episode seriesID))
   )
+
 (defn get-watchlist [request]
   (DEBUG "get-watchlist called")
+  (getUserID request)
+  (buslog/list-carry-on-watchlist)
   )
 
 (defn play-series [request]
-   (DEBUG "play-series called")
-  )
+  (DEBUG "play-series called")
+  (getUserID request)
+  (let [seriesID (:seriesID (:params request))]
+    (DEBUG "seriesID=" seriesID)
+    (buslog/play-episode-num @UID seriesID))) 
 
 (defn inc-series [request]
   (DEBUG "inc-series called")
-  {:ret 1}
-  )
+  (getUserID request)
+  (let [seriesID (:seriesID (:params request))]
+    (DEBUG "seriesID=" seriesID)
+    (buslog/inc-episode-num @UID seriesID 1)
+    (buslog/get-next-episode seriesID)
+    ))
+
 (defn dec-series [request]
   (DEBUG "dec-series called")
-  {:ret 1}
-  )
-
-(defn inc-season [request]
-   (DEBUG "inc-season called")
-   (getUserID request)
-  )
-(defn dec-season [request]
-   (DEBUG "dec-season called")
   (getUserID request)
-  )
+  (let [seriesID (:seriesID (:params request))]
+    (DEBUG "seriesID=" seriesID)
+    (buslog/inc-episode-num @UID seriesID -1)
+    (buslog/get-next-episode seriesID)
+    ))
+
+(defn inc-season [request] 
+  (getUserID request)
+  (let [seriesID (:seriesID (:params request))]
+    (DEBUG "seriesID=" seriesID)
+    (buslog/inc-episode-num @UID seriesID 100)
+    (buslog/get-next-episode seriesID)))
+
+(defn dec-season [request]
+  (DEBUG "dec-season called")
+  (getUserID request)
+  (let [seriesID (:seriesID (:params request))]
+    (DEBUG "seriesID=" seriesID)
+    (buslog/inc-episode-num @UID seriesID -100)
+    (buslog/get-next-episode seriesID)
+    ))
 
 
 ;; *********************************
@@ -95,10 +138,11 @@
 ;;
 (defroutes app
   (GET "/" [] (resource-response "public/index.html"))
-  (GET "/about/:id" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" (:id (:params request)) request))
-  (GET "/Series" request (get-JSON-response get-all-series request))
+  ;; test route, not used by program
+  (GET "/about/:id" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" (:id (:params request)) request)) 
+  ;;(GET "/Series" request (get-JSON-response get-all-series request)) 
   (GET "/WatchList" request (get-JSON-response get-watchlist request))
-  (GET "/Series/:seriesID" request (get-JSON-response get-series request))
+  ;;(GET "/Series/:seriesID" request (get-JSON-response get-series request))
   (GET "/Series/:seriesID/Play" request (get-JSON-response play-series request))
   (GET "/Series/:seriesID/Inc" request (get-JSON-response inc-series request))
   (GET "/Series/:seriesID/Dec" request (get-JSON-response dec-series request))
@@ -127,7 +171,7 @@
   
   (show-debug)
   (clear-debug)
-  
+
 ;;
   )
 
