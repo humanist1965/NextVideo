@@ -48,8 +48,8 @@
   (let [relpath (str seriesID seasonNum ".yml")
         filepath (get-yaml-filepath relpath)]
     (if (.exists (io/file filepath))
-      ;;(prn "Error file already exists - aborting!:" filepath)
-      (spit filepath outStr)
+      (prn "Error file already exists - aborting!:" filepath)
+      ;;(spit filepath outStr)
       (spit filepath outStr)))
   )
 
