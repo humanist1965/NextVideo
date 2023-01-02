@@ -173,7 +173,15 @@
   ;; Using two middleware handlers here
   (res/wrap-resource (wrap/wrap-params (reload/wrap-reload #'app)) "public"))
 
-(defn server [] (jet/run-jetty #'app-with-reload {:join? false :port 8000}))
+
+(defonce WEBSERVER (atom nil))
+(defn server [] 
+  (if @WEBSERVER
+    @WEBSERVER
+    (let [ws (jet/run-jetty #'app-with-reload {:join? false :port 8000})
+          _ (reset! WEBSERVER ws)]
+      ws)))
+
 
 (defn start-bookmark-server [] (.start (server)))
 (defn stop-bookmarkserver [] (.stop (server)))
@@ -182,10 +190,11 @@
 (comment
   ;; *********************************************
   ;; [1] Start/Stop the webserver
-
+  
   (start-bookmark-server) ;; http://localhost:8000
   (stop-bookmarkserver)
-  
+  @WEBSERVER
+  (server)
   (show-debug)
   (clear-debug)
 
