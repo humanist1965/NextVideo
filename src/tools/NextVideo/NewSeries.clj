@@ -80,16 +80,15 @@
         ]
     (_saveToYAMLFile seriesID seasonNum outStr)))
 
-(subs "1234" 1 )
 
 (defn main []
-  (createYAMLfromTVHOMEUrl "WestWorld",1,"TVHOME_RAW/westworld1.html") 
+  (createYAMLfromTVHOMEUrl "TWL",1,"TVHOME_RAW/twl1.html") 
+  (createYAMLfromTVHOMEUrl "TWL",2,"TVHOME_RAW/twl1.html")
   )
 
 (comment
   (main) 
-  (get-html-filepath "TVHOME_RAW/westworld1.html")
-  (createYAMLfromTVHOMEUrl "WestWorld",1,"TVHOME_RAW/westworld1.html")
+  
 
   ;;
   )

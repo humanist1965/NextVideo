@@ -218,5 +218,12 @@
   image: images/hod.jpg
   infoUrl: https://www.themoviedb.org/tv/94997-house-of-the-dragon/season/${S}/episode/${E}
 
+-  
+  seriesID: TWL  
+  name: "The White Lotus"
+  image: images/TWL.jpeg
+  infoUrl: https://www.themoviedb.org/tv/111803-the-white-lotus/season/${S}/episode/${E}
+
+
 
 
