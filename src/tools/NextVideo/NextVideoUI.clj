@@ -87,9 +87,24 @@
   )
 
 (defn get-watchlist [request]
-  (DEBUG "get-watchlist called")
-  (getUserID request)
-  (buslog/list-carry-on-watchlist)
+  (DEBUG "get-watchlist called xxx")
+  (let [uid (getUserID request)
+        _ (buslog/load-user-data uid)
+        watchlist (buslog/list-carry-on-watchlist)
+        cur-obj (first watchlist)
+        seriesID (when cur-obj (:seriesID cur-obj))
+        url (when cur-obj (:url cur-obj))]
+    (if url watchlist 
+        ;; if URL is not defined then using the following kludge 
+        (let [_ (buslog/get-next-episode seriesID) 
+              _ (buslog/save-user-data uid)
+              _ (buslog/load-user-data uid)
+              watchlist (buslog/list-carry-on-watchlist)
+              cur-obj (first watchlist) 
+              url (when cur-obj (:url cur-obj))
+              _ (DEBUG "get-watchlist finding URL called xxx" url cur-obj)]
+          watchlist))
+    watchlist)
   )
 
 (defn play-series [request]
@@ -97,7 +112,9 @@
   (getUserID request)
   (let [seriesID (:seriesID (:params request))]
     (DEBUG "seriesID=" seriesID)
-    (buslog/play-episode-num @UID seriesID))) 
+    (buslog/play-episode-num @UID seriesID)
+    (buslog/inc-episode-num @UID seriesID 1)
+    )) 
 
 (defn inc-series [request]
   (DEBUG "inc-series called")
@@ -147,6 +164,22 @@
   @DEBUG-BUFFER
   )
 
+;;
+;; handler for diabling caching on all pages
+;; NOTE: Does not appear to help with my current issue
+;;
+(defn wrap-nocache [handler]
+  (fn [request] (-> request
+                    handler
+                    (assoc-in [:headers "Pragma"] "no-cache"))))
+
+
+(defn wrap-cache-buster
+  "Prevents any and all HTTP caching by adding a Cache-Control header
+  that marks contents as private and non-cacheable."
+  [handler]
+  (fn wrap-cache-buster-handler [response]
+    (resp/header (handler response) "cache-control" "private, max-age=0, no-cache")))
 
 ;; *********************************
 ;; Define the possible routes of our webserver
@@ -171,7 +204,7 @@
 ;; https://github.com/ring-clojure/ring/issues/104
 (def app-with-reload
   ;; Using two middleware handlers here
-  (res/wrap-resource (wrap/wrap-params (reload/wrap-reload #'app)) "public"))
+  (wrap-cache-buster (res/wrap-resource (wrap/wrap-params (reload/wrap-reload #'app)) "public")))
 
 
 (defonce WEBSERVER (atom nil))
@@ -193,7 +226,7 @@
   
   (start-bookmark-server) ;; http://localhost:8000
   (stop-bookmarkserver)
-  @WEBSERVER
+  @WEBSERVER 
   (server)
   (show-debug)
   (clear-debug)

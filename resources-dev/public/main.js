@@ -23,7 +23,7 @@ var app = new Vue({
     },
     PlayNextEpisode: function () {
       series = data.seriesList[currentSelectedCarouselIndex];
-      console.log("PlayNextEpisode for " + series.name);
+      console.log("PlayNextEpisode for " + series.name + " " + series.url);
       //console.log("Season: " + series.currentSeasonNumber);
       //console.log("Episode: " + series.nextEpisodeNumber);
       //console.log("URL: " + series.url);
@@ -146,7 +146,7 @@ function isActiveAux (index) {
 }
 
 function getSeriesList(){
-  console.log("getSeriesList called 11111");
+  console.log("getSeriesList called");
   //getSeriesListMockUp();
   getSeriesListReal()
 }
@@ -159,7 +159,7 @@ function getSeriesListMockUp(){
 function getSeriesListReal(){
   callJSON(getURL2("/WatchList"),
         function (data2){data.seriesList = data2;
-          //console.log(JSON.stringify(data2));
+          console.log(JSON.stringify(data2[0]));
         },
         function (error){console.log("Server Error:" + error);},
       );
@@ -298,9 +298,10 @@ function getFromLocalStorage(key) {
 var intCount = 0;
 var INTERVAL_TIMER = window.setInterval(function(){
   //DEBUG("Interval called: " + intCount++); 
+  console.log("refreshApp called xx " + data.ProfileID);
   window.setTimeout(refreshApp, 1000);     // Watch out for this value (and corresponding one below). May be too quick for some browsers! Didin't work on MacOS desktop machine.
   window.clearInterval(INTERVAL_TIMER);
-}, 100);
+}, 100);  
 
 function DEBUG(msg){
   debugConsole = $("#debugConsole");
@@ -318,9 +319,12 @@ function DEBUG(msg){
 
 function refreshApp(){
   //DEBUG("Refresh App");
+  
   init();
   app.$forceUpdate();
-  
+
+  //window.location.replace("http://localhost:8000/index.html?r=1");
+
 }
 
 init();

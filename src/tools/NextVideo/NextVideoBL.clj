@@ -6,6 +6,26 @@
              [clojure.pprint :as pp]
             ))
 
+;;
+;; *******************************************************************************
+;; Helper functions for debugging
+;; NOTE: These are needed because *out* is used by Jetty
+;;
+
+(defonce DEBUG-BUFFER (atom []))
+(defonce DEBUG-BUFFER-MAX (atom 50))
+(defn clear-debug [] (reset! DEBUG-BUFFER []))
+(defn show-debug []
+  (prn "DEBUG OUTPUT:")
+  (doall (map #(prn %2 %1) @DEBUG-BUFFER (iterate inc 1)))
+  nil)
+(defn DEBUG [msg & args]
+  (let [args-str (reduce (fn [res it] (str res " " it)) "" args)
+        msg (str msg args-str)
+        buf-len (count @DEBUG-BUFFER)]
+    (when (>= buf-len @DEBUG-BUFFER-MAX) (reset! DEBUG-BUFFER []))
+    (reset! DEBUG-BUFFER (conj @DEBUG-BUFFER msg))))
+
 
 (defn now-datetime []
   (.format (java.text.SimpleDateFormat. "yyyy-MM-dd HH.mm.ss") (new java.util.Date)))
@@ -111,6 +131,7 @@
 (defn list-carry-on-watchlist []
   @WATCH_LIST)
 
+
 (defn get-next-episode [seriesID]
   (let [user-obj (get-watch-list-dict seriesID)
         curSeasonNum (get user-obj :currentSeasonNumber)
@@ -118,7 +139,9 @@
         season-data (loadSeasonData seriesID curSeasonNum)
         episode-data (get-episode-data season-data curEpisodeNum)
         url (get episode-data :url)]
-    (when url (assoc user-obj :url url))))
+    (when url 
+      (update-user-data seriesID :url url)
+      (assoc user-obj :url url))))
 
 (defn play-episode-num [userID seriesID]
   (let [dt-str (now-datetime)]
@@ -166,9 +189,19 @@
   (for [_i (range 1)](inc-episode-num "mark" "WIRE" 1))
   (loadSeasonData "WIRE" 5)
   (load-user-data "mark")
-  (get-next-episode "WIRE")
+  (get-next-episode "TWL")
+  @WATCH_LIST_DICT
+  (get @WATCH_LIST_DICT "TWL")
+  @WATCH_LIST 
+  @ALL_LIST
   (db/getYAML "AllSeriesList")
   (load-user-data "mark")
+  
+   (load-user-data "guest")
+  (get @WATCH_LIST_DICT "TWL") 
+ (get-next-episode "TWL")
+ (save-user-data "guest")
+ (load-user-data "guest")
 
   ;;
   )
