@@ -193,8 +193,9 @@ function init(){
     //DEBUG("onpageshow");
     console.log('onpageshow');
     if (event.persisted) {
-      console.log('onpageshow - persisted');
-      app.$forceUpdate();
+      console.log('onpageshow - persisted xx');
+      //app.$forceUpdate();
+      refreshApp();
     }
   };
 
