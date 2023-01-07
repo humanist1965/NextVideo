@@ -97,8 +97,6 @@ var app = new Vue({
         function (data2){
           data.seriesList[currentSelectedCarouselIndex] = data2;
           app.$forceUpdate();
-          // Trying to solve aws-fire-stick issue
-          data.seriesList[currentSelectedCarouselIndex] = null;
           if (globalToPlayURL != null) {
             console.log("About to play: " + globalToPlayURL);
             window.open(globalToPlayURL,"_self");
