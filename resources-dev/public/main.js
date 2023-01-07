@@ -196,7 +196,7 @@ function init(){
     //app.$forceUpdate();
   });
 
-  window.onpopstate = window.onpageshow = function(event) {
+  window.onhashchange = window.onpopstate = window.onpageshow = function(event) {
     //DEBUG("onpageshow");
     series = data.seriesList[currentSelectedCarouselIndex];
     console.log('onpageshow' + series);
@@ -248,7 +248,6 @@ function init(){
 
 jQuery(document).ready(function($){
   DEBUG("JQuery Ready called");
-  history.navigationMode = 'compatible';
   $(window).on('popstate',function(){
     //DEBUG("POPSTATE Force Reload");
     console.log('POPSTATE Force Reload');
