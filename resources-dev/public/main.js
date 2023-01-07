@@ -88,6 +88,8 @@ var app = new Vue({
       // Don't know how to do this neatly so having to use a global - globalToPlayURL
       globalToPlayURL = toPlayURL
       series = data.seriesList[currentSelectedCarouselIndex];
+      // Trying something dramatic to fix Clojure FireStick issue
+      data.seriesList[currentSelectedCarouselIndex] = null;
       actionStr = "/Inc";
       if (toPlayURL != null) actionStr = "/Play";
       callJSON(getURL2("/Series/") + series.seriesID + actionStr,
