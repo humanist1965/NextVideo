@@ -186,10 +186,15 @@ function init(){
   $(window).focus(function() {
     //DEBUG("focus - welcome (back)");
     console.log('welcome (back)');
+    series = data.seriesList[currentSelectedCarouselIndex];
+    if (series == null){
+      console.log('onpageshow - NULL series');
+      refreshApp();
+    }
     //app.$forceUpdate();
   });
 
-  window.onpageshow = function(event) {
+  window.onpopstate = window.onpageshow = function(event) {
     //DEBUG("onpageshow");
     series = data.seriesList[currentSelectedCarouselIndex];
     console.log('onpageshow' + series);
