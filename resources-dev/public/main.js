@@ -191,11 +191,17 @@ function init(){
 
   window.onpageshow = function(event) {
     //DEBUG("onpageshow");
-    console.log('onpageshow');
+    series = data.seriesList[currentSelectedCarouselIndex];
+    console.log('onpageshow' + series);
+    
+    if (series == null){
+      console.log('onpageshow - NULL series');
+      refreshApp();
+    }
     if (event.persisted) {
       console.log('onpageshow - persisted xx');
       //app.$forceUpdate();
-      refreshApp();
+      //refreshApp(); 
     }
   };
 
