@@ -316,16 +316,20 @@ var INTERVAL_TIMER = window.setInterval(function(){
   window.clearInterval(INTERVAL_TIMER);
 }, 100);  
 
+// This next section fixes my refresh issue on Amazon-firestick-browser
+// Keeping track of last_update_time that the INTERVAL_TIMER2 was called
+// When page is active this should be every ~3 secs.
+// If the time_diff_secs goes beyond 6 secs I am asssuming that a refreshApp is needed
 var last_update_time = Date.now();
 var INTERVAL_TIMER2 = window.setInterval(function(){
   //DEBUG("Interval called: " + intCount++); 
-  console.log("checking whether  refreshApp is needed");
+  //console.log("checking whether  refreshApp is needed");
   var current_time = Date.now();
   var time_diff_secs = (current_time - last_update_time) / 1000 ;
-  console.log("time_diff_secs = " + time_diff_secs);
+  //console.log("time_diff_secs = " + time_diff_secs);
   if (time_diff_secs > 6) {
-    console.log("Looks like we need to RefreshApp" + data.ProfileID);
-    // Do we need to call this using setTimeout??
+    //console.log("Looks like we need to RefreshApp" + data.ProfileID);
+    // TBD - Do we need to call this using setTimeout??
     window.setTimeout(refreshApp, 1000); 
   }
   last_update_time = current_time;
