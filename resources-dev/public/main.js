@@ -178,7 +178,8 @@ function init(){
     var slideFrom = $(this).find('.active').index();
     currentSelectedCarouselIndex = $(e.relatedTarget).index();
     $(this).carousel("pause"); // prevent the carousel from auto sliding
-    //console.log(slideFrom+' => '+currentSelectedCarouselIndex);
+    // This wasn't working until I inserted this log statement. Now it seems to be!
+    console.log(slideFrom+' => '+currentSelectedCarouselIndex);
   });
 
   // Getting a strange behaviour with back button on Amazon Fire TV Stick browsers
