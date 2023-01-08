@@ -316,6 +316,22 @@ var INTERVAL_TIMER = window.setInterval(function(){
   window.clearInterval(INTERVAL_TIMER);
 }, 100);  
 
+var last_update_time = Date.now();
+var INTERVAL_TIMER2 = window.setInterval(function(){
+  //DEBUG("Interval called: " + intCount++); 
+  console.log("checking whether  refreshApp is needed");
+  var current_time = Date.now();
+  var time_diff_secs = (current_time - last_update_time) / 1000 ;
+  console.log("time_diff_secs = " + time_diff_secs);
+  if (time_diff_secs > 6) {
+    console.log("Looks like we need to RefreshApp" + data.ProfileID);
+    // Do we need to call this using setTimeout??
+    window.setTimeout(refreshApp, 1000); 
+  }
+  last_update_time = current_time;
+  
+}, 3000);  
+
 function DEBUG(msg){
   debugConsole = $("#debugConsole");
   curInner = debugConsole.html(); 
