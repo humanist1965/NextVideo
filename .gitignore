@@ -57,5 +57,6 @@ src/.clj-kondo/.cache/v1/clj/mambu.product_catalogue.mortgages.annual_rest.annua
 src/.lsp/.cache/db.transit.json
 src/.clj-kondo/.cache/v1/clj/mambu.product_catalogue.mortgages.annual_review.annual_review.transit.json
 src/mambu/api/swagger/SWAGGER_FILES/complete/*
-bin/stop.sh
 src/tools/NextVideo/$$DATASTORE$$
+mambu-config/*
+
