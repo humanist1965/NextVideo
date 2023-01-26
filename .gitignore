@@ -60,3 +60,6 @@ src/mambu/api/swagger/SWAGGER_FILES/complete/*
 src/tools/NextVideo/$$DATASTORE$$
 mambu-config/*
 
+CSV_DUMP/SendToNetsuite_2023-01-05_BatchSize_1.csv
+CSV_DUMP/SendToNetsuite_2023-01-23_BatchSize_1.csv
+CSV_DUMP/SendToNetsuite_2023-01-23_BatchSize_20.csv
