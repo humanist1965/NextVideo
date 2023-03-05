@@ -224,6 +224,9 @@
   image: images/TWL.jpg
   infoUrl: https://www.themoviedb.org/tv/111803-the-white-lotus/season/${S}/episode/${E}
 
-
-
+-  
+  seriesID: RBW  
+  name: "Raised By Wolves"
+  image: images/rbw.jpg
+  infoUrl: https://www.themoviedb.org/tv/85723-raised-by-wolves/season/${S}/episode/${E}
 
