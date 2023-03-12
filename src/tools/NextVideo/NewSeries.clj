@@ -83,7 +83,7 @@
 
 (defn main []
   (createYAMLfromTVHOMEUrl "TWL",1,"TVHOME_RAW/twl1.html") 
-  (createYAMLfromTVHOMEUrl "TWL",2,"TVHOME_RAW/twl1.html")
+  (createYAMLfromTVHOMEUrl "TWL",2,"TVHOME_RAW/twl2.html")
   )
 
 (comment
