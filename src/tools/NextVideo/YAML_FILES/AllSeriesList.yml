@@ -230,3 +230,9 @@
   image: images/rbw.jpg
   infoUrl: https://www.themoviedb.org/tv/85723-raised-by-wolves/season/${S}/episode/${E}
 
+-  
+  seriesID: LEON  
+  name: "Leonardo"
+  image: images/leon.jpg
+  infoUrl: https://www.themoviedb.org/tv/96230-leonardo/season/${S}/episode/${E}
+  
