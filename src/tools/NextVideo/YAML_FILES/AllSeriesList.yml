@@ -236,3 +236,10 @@
   image: images/leon.jpg
   infoUrl: https://www.themoviedb.org/tv/96230-leonardo/season/${S}/episode/${E}
   
+-  
+  seriesID: HALT  
+  name: "Halt and Catch Fire"
+  image: images/halt.jpg
+  infoUrl: https://www.themoviedb.org/tv/59659-halt-and-catch-fire/season/${S}/episode/${E}
+  
+
