@@ -87,6 +87,9 @@
   ;;(createYAMLfromTVHOMEUrl "SUCCESS",4,"TVHOME_RAW/SUCCESS4.html")
   ;;(createYAMLfromTVHOMEUrl "LEON",1,"TVHOME_RAW/LEON1.html")
   (createYAMLfromTVHOMEUrl "HALT",1,"TVHOME_RAW/halt1.html")
+  (createYAMLfromTVHOMEUrl "HALT",2,"TVHOME_RAW/halt2.html")
+  (createYAMLfromTVHOMEUrl "HALT",3,"TVHOME_RAW/halt3.html")
+  (createYAMLfromTVHOMEUrl "HALT",4,"TVHOME_RAW/halt4.html")
   )
 
 (comment
