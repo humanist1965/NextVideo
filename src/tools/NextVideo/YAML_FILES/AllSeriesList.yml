@@ -242,4 +242,10 @@
   image: images/halt.jpg
   infoUrl: https://www.themoviedb.org/tv/59659-halt-and-catch-fire/season/${S}/episode/${E}
   
+-  
+  seriesID: OUT  
+  name: "Outlander"
+  image: images/out.jpg
+  infoUrl: https://www.themoviedb.org/tv/56570-outlander/season/${S}/episode/${E}
+    
 
