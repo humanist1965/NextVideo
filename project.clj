@@ -25,7 +25,9 @@
                  [dk.ative/docjure "1.14.0"]
                  [org.clojars.bpsm/big-ivan "0.1.0"]
                  [org.clojure/test.check "1.1.0"]
-                 [org.clojure/tools.namespace "1.2.0"]]
+                 [org.clojure/tools.namespace "1.2.0"]
+                 [clj-commons/pomegranate "1.2.23"]
+                 ]
   :profiles {:replxx {:plugins [[cider/cider-nrepl "0.27.2"]]}
              :dev {:resource-paths ["resources-dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.3"]]

@@ -2,6 +2,7 @@
 # !/bin/bash -x to turn echo on 
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+NV_RES_PATH="${DIR}/../resources"
 cd ${DIR}/..
 
 # Start the webserver - http://127.0.0.1:8000/

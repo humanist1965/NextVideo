@@ -14,6 +14,8 @@
             [clojure.pprint :as pp]
             [tools.NextVideo.NextVideoBL :as buslog]
              [clojure.java.shell :as sh]
+            [cemerick.pomegranate :as pom]
+            [clojure.java.shell :as sh]
             ))
 
 
@@ -44,12 +46,16 @@
 ;; Not using the local version of resource-response anymore.
 ;;
 (defonce RESOURCE_ROOT (atom "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
+
+(defn resource-path [relpath]
+ (str @RESOURCE_ROOT relpath))
+
 ;;
 ;; This is a local version of resp/resource-response
 ;; resp/resource-response is not always working for me because of classpath issues (when I share a REPL across projects)
 ;; So this version just slurps response in from a specific filepath
 (defn resource-response [relpath]
-  (slurp (str @RESOURCE_ROOT relpath))
+  (slurp (resource-path relpath))
   )
 
 (defn get-JSON-response [func request]
@@ -187,6 +193,7 @@
 ;;
 (defroutes app
   (GET "/" [] (resp/resource-response "public/index.html"))
+  ;;(GET "/" [] (resource-response "public/index.html"))
   ;; test route, not used by program
   (GET "/about/:id" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" (:id (:params request)) request)) 
   ;;(GET "/Series" request (get-JSON-response get-all-series request)) 
@@ -215,9 +222,26 @@
           _ (reset! WEBSERVER ws)]
       ws)))
 
+(defn load-resource
+  [name]
+  (let [rsc-name (str name)
+        thr (Thread/currentThread)
+        ldr (.getContextClassLoader thr)]
+    (.getResourceAsStream ldr rsc-name)))
 
-(defn start-bookmark-server [] (.start (server)))
+(defn get-environment-variable [var-name]
+  (System/getenv var-name))
+
+(defn set-environment-variable [var-name var-value]
+  (System/setProperty var-name var-value))
+
+(defn extend-resource-path []
+  (let [nv-res-path  (get-environment-variable "NV_RES_PATH")]
+    (when nv-res-path  (pom/add-classpath nv-res-path))))
+
+(defn start-bookmark-server [] (extend-resource-path)(.start (server)))
 (defn stop-bookmarkserver [] (.stop (server)))
+
 
 
 (comment
@@ -225,12 +249,31 @@
   ;; [1] Start/Stop the webserver
   (start-bookmark-server) ;; http://localhost:8000
   (stop-bookmarkserver)
-  @WEBSERVER 
+  @WEBSERVER
   (server)
   (show-debug)
   (clear-debug)
+  @RESOURCE_ROOT
+  (resource-response "public/index.html")
+  (resource-path "public")
+  (resource-path "public/index.html")
 
-;;
+
+  ; Usage example 
+  (def file-contents (load-resource "mk.txt"))
+  (def file-contents (load-resource "public/index3.html"))
+  (pom/add-classpath "/Users/mkersh/tmptt")
+  (slurp file-contents) 
+  (load-resource "mk.txt")
+  (println file-contents)
+
+  (get-environment-variable "NV_RES_PATH")
+  (set-environment-variable "NV_RES_PATH" "/Users/mkersh/tmptt")
+  (extend-resource-path)
+  (sh/sh "env")
+  
+  
+  ;;
   )
 
 
