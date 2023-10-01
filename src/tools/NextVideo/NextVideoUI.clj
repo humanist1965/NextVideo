@@ -164,8 +164,8 @@
                     #":"))))
 
 (defn get-debug [_request] 
-  (DEBUG "cd:" (sh/sh "cd" "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
-  (DEBUG "PWD:" (sh/sh "pwd"))
+  ;;(DEBUG "cd:" (sh/sh "cd" "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
+  ;;(DEBUG "PWD:" (sh/sh "pwd"))
   ;;(DEBUG "CLASSPATH=" (printClassPath))
   @DEBUG-BUFFER
   )
