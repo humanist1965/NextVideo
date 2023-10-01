@@ -247,5 +247,11 @@
   name: "Outlander"
   image: images/out.jpg
   infoUrl: https://www.themoviedb.org/tv/56570-outlander/season/${S}/episode/${E}
-    
+
+-  
+  seriesID: SLOW  
+  name: "Slow Horses"
+  image: images/slow.jpg
+  infoUrl: https://www.themoviedb.org/tv/95480-slow-horses/season/${S}/episode/${E}
+      
 
