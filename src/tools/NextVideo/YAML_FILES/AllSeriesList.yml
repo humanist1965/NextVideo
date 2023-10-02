@@ -253,5 +253,11 @@
   name: "Slow Horses"
   image: images/slow.jpg
   infoUrl: https://www.themoviedb.org/tv/95480-slow-horses/season/${S}/episode/${E}
-      
+
+-  
+  seriesID: WEWORK  
+  name: "WeCrashed"
+  image: images/wework.jpg
+  infoUrl: https://www.themoviedb.org/tv/117821-wecrashed/season/${S}/episode/${E}
+           
 
