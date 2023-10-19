@@ -260,4 +260,9 @@
   image: images/wework.jpg
   infoUrl: https://www.themoviedb.org/tv/117821-wecrashed/season/${S}/episode/${E}
            
+-  
+  seriesID: MITB  
+  name: "Only Murders In The Building"
+  image: images/mitb.jpg
+  infoUrl: https://www.themoviedb.org/tv/107113-only-murders-in-the-building/season/${S}/episode/${E}
 
