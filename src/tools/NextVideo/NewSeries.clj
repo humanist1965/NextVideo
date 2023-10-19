@@ -82,8 +82,9 @@
 
 
 (defn main2 []
-  (createYAMLfromTVHOMEUrl "FOUNDATION",2,"TVHOME_RAW/FOUNDATION2.html")
-)
+  (createYAMLfromTVHOMEUrl "MITB",1,"TVHOME_RAW/mitb1.html")
+  (createYAMLfromTVHOMEUrl "MITB",2,"TVHOME_RAW/mitb2.html")
+  (createYAMLfromTVHOMEUrl "MITB",3,"TVHOME_RAW/mitb3.html"))
 
 (comment
   (main2) 
