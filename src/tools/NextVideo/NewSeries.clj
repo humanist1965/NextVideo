@@ -82,16 +82,12 @@
 
 
 (defn main2 []
-    (createYAMLfromTVHOMEUrl "24L",1,"TVHOME_RAW/24L1.html")
-
-  ;; (createYAMLfromTVHOMEUrl "MITB",1,"TVHOME_RAW/mitb1.html")
-  ;; (createYAMLfromTVHOMEUrl "MITB",2,"TVHOME_RAW/mitb2.html")
-  ;; (createYAMLfromTVHOMEUrl "MITB",3,"TVHOME_RAW/mitb3.html")
-  )
+  (createYAMLfromTVHOMEUrl "TEDL",1,"TVHOME_RAW/TEDL1.html")
+  (createYAMLfromTVHOMEUrl "TEDL",2,"TVHOME_RAW/TEDL2.html")
+  (createYAMLfromTVHOMEUrl "TEDL",3,"TVHOME_RAW/TEDL3.html"))
 
 (comment
   (main2) 
 
-  (/ 3.0)
   ;;
   )

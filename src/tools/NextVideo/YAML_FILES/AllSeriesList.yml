@@ -271,3 +271,9 @@
   name: "24 Legacy"
   image: images/24L.jpg
   infoUrl: https://www.themoviedb.org/tv/66789-24-legacy/season/${S}/episode/${E}
+
+-  
+  seriesID: TEDL  
+  name: "Ted Lasso"
+  image: images/TEDL.jpg
+  infoUrl: https://www.themoviedb.org/tv/97546-ted-lasso/season/${S}/episode/${E}
