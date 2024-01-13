@@ -33,3 +33,4 @@ src/.clj-kondo/.cache/v1/lock
 src/.lsp/.cache/db.transit.json
 src/tools/NextVideo/$$DATASTORE$$
 .openvscode-server/*
+
