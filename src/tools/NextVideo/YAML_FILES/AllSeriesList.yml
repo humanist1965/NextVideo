@@ -247,5 +247,33 @@
   name: "Outlander"
   image: images/out.jpg
   infoUrl: https://www.themoviedb.org/tv/56570-outlander/season/${S}/episode/${E}
-    
 
+-  
+  seriesID: SLOW  
+  name: "Slow Horses"
+  image: images/slow.jpg
+  infoUrl: https://www.themoviedb.org/tv/95480-slow-horses/season/${S}/episode/${E}
+
+-  
+  seriesID: WEWORK  
+  name: "WeCrashed"
+  image: images/wework.jpg
+  infoUrl: https://www.themoviedb.org/tv/117821-wecrashed/season/${S}/episode/${E}
+           
+-  
+  seriesID: MITB  
+  name: "Only Murders In The Building"
+  image: images/mitb.jpg
+  infoUrl: https://www.themoviedb.org/tv/107113-only-murders-in-the-building/season/${S}/episode/${E}
+
+-  
+  seriesID: 24L  
+  name: "24 Legacy"
+  image: images/24L.jpg
+  infoUrl: https://www.themoviedb.org/tv/66789-24-legacy/season/${S}/episode/${E}
+
+-  
+  seriesID: TEDL  
+  name: "Ted Lasso"
+  image: images/TEDL.jpg
+  infoUrl: https://www.themoviedb.org/tv/97546-ted-lasso/season/${S}/episode/${E}

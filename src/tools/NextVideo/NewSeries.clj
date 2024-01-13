@@ -81,18 +81,13 @@
     (_saveToYAMLFile seriesID seasonNum outStr)))
 
 
-(defn main2 [] 
-  (createYAMLfromTVHOMEUrl "OUT",1,"TVHOME_RAW/out1.html")
-  (createYAMLfromTVHOMEUrl "OUT",2,"TVHOME_RAW/out2.html")
-  (createYAMLfromTVHOMEUrl "OUT",3,"TVHOME_RAW/out3.html")
-  (createYAMLfromTVHOMEUrl "OUT",4,"TVHOME_RAW/out4.html")
-  (createYAMLfromTVHOMEUrl "OUT",5,"TVHOME_RAW/out5.html")
-  (createYAMLfromTVHOMEUrl "OUT",6,"TVHOME_RAW/out6.html")
-  (createYAMLfromTVHOMEUrl "OUT",7,"TVHOME_RAW/out7.html")
-  
-  )
+(defn main2 []
+  (createYAMLfromTVHOMEUrl "TEDL",1,"TVHOME_RAW/TEDL1.html")
+  (createYAMLfromTVHOMEUrl "TEDL",2,"TVHOME_RAW/TEDL2.html")
+  (createYAMLfromTVHOMEUrl "TEDL",3,"TVHOME_RAW/TEDL3.html"))
 
 (comment
   (main2) 
+
   ;;
   )

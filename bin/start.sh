@@ -6,7 +6,7 @@ NV_RES_PATH="${DIR}/../resources"
 cd ${DIR}/..
 
 # Start the webserver - http://127.0.0.1:8000/
-java -jar bin/nextvideo.jar&
+java -cp ${NV_RES_PATH}:${DIR}/nextvideo.jar repl_start&
 WS_PID=$!
 
 cd bin

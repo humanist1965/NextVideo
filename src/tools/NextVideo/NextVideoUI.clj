@@ -164,8 +164,8 @@
                     #":"))))
 
 (defn get-debug [_request] 
-  (DEBUG "cd:" (sh/sh "cd" "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
-  (DEBUG "PWD:" (sh/sh "pwd"))
+  ;;(DEBUG "cd:" (sh/sh "cd" "/Users/mkersh/clojure/Shared/NextVideo/resources-dev/"))
+  ;;(DEBUG "PWD:" (sh/sh "pwd"))
   ;;(DEBUG "CLASSPATH=" (printClassPath))
   @DEBUG-BUFFER
   )
@@ -195,16 +195,16 @@
   (GET "/" [] (resp/resource-response "public/index.html"))
   ;;(GET "/" [] (resource-response "public/index.html"))
   ;; test route, not used by program
-  (GET "/about/:id" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" (:id (:params request)) request)) 
+  (GET "/about/:id" request (str "<h1>AAAAAHello WorldAAAA!!!</h1>" (:id (:params request)) request))
   ;;(GET "/Series" request (get-JSON-response get-all-series request)) 
-   (GET "/showdebug" request (get-JSON-response get-debug request))
+  (GET "/showdebug" request (get-JSON-response get-debug request))
   (GET "/WatchList" request (get-JSON-response get-watchlist request))
   ;;(GET "/Series/:seriesID" request (get-JSON-response get-series request))
   (GET "/Series/:seriesID/Play" request (get-JSON-response play-series request))
   (GET "/Series/:seriesID/Inc" request (get-JSON-response inc-series request))
   (GET "/Series/:seriesID/Dec" request (get-JSON-response dec-series request))
   (GET "/Series/:seriesID/IncSeason" request (get-JSON-response inc-season request))
-  (GET "/Series/:seriesID/DecSeason" request (get-JSON-response dec-season request)) 
+  (GET "/Series/:seriesID/DecSeason" request (get-JSON-response dec-season request))
 
   (route/not-found "<h1>Page not found</h1>"))
 
@@ -239,7 +239,9 @@
   (let [nv-res-path  (get-environment-variable "NV_RES_PATH")]
     (when nv-res-path  (pom/add-classpath nv-res-path))))
 
-(defn start-bookmark-server [] (extend-resource-path)(.start (server)))
+(defn start-bookmark-server [] (extend-resource-path)
+  (printClassPath)
+  (.start (server)))
 (defn stop-bookmarkserver [] (.stop (server)))
 
 
