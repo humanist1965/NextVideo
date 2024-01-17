@@ -82,9 +82,11 @@
 
 
 (defn main2 []
-  (createYAMLfromTVHOMEUrl "TEDL",1,"TVHOME_RAW/TEDL1.html")
-  (createYAMLfromTVHOMEUrl "TEDL",2,"TVHOME_RAW/TEDL2.html")
-  (createYAMLfromTVHOMEUrl "TEDL",3,"TVHOME_RAW/TEDL3.html"))
+  (createYAMLfromTVHOMEUrl "YELL",1,"TVHOME_RAW/yell1.html")
+  (createYAMLfromTVHOMEUrl "YELL",2,"TVHOME_RAW/yell2.html")
+  (createYAMLfromTVHOMEUrl "YELL",3,"TVHOME_RAW/yell3.html")
+  (createYAMLfromTVHOMEUrl "YELL",4,"TVHOME_RAW/yell4.html")
+  (createYAMLfromTVHOMEUrl "YELL",5,"TVHOME_RAW/yell5.html"))
 
 (comment
   (main2) 

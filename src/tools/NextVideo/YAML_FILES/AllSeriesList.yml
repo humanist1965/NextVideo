@@ -277,3 +277,9 @@
   name: "Ted Lasso"
   image: images/TEDL.jpg
   infoUrl: https://www.themoviedb.org/tv/97546-ted-lasso/season/${S}/episode/${E}
+
+-  
+  seriesID: YELL  
+  name: "Yellowstone"
+  image: images/yell.jpg
+  infoUrl: https://www.themoviedb.org/tv/73586-yellowstone/season/${S}/episode/${E}
